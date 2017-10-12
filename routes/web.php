@@ -18,6 +18,9 @@ Route::get('/', function () {
 //登录注册
 Route::post('/login', 'LoginController@userLogin');
 Route::post('/logout', 'LoginController@deleteUserSession');
-
-//注册路由
 Route::post('/register', 'RegisterController@userRegister');
+
+//test
+Route::any('/test', function (){
+    return "hello";
+});
