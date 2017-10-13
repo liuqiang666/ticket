@@ -29,7 +29,7 @@ class ResponseHelper {
             'msg' => $msg == '' ? config("errorCode.$errorCode", '') : $msg,
             'extraInfo' => $extraInfo,
         ]);
-        return $response;
+        return $response->header("charset", 'utf-8');
     }
 
 
