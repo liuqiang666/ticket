@@ -20,7 +20,20 @@ Route::post('/login', 'LoginController@userLogin');
 Route::post('/logout', 'LoginController@deleteUserSession');
 Route::post('/register', 'RegisterController@userRegister');
 
-//test
-Route::any('/test', function (){
-    return "hello";
-});
+//余票查询
+Route::post('/ticket', 'ScheduleController@getSeatCount');
+
+//时刻表
+Route::post('/schedule', 'ScheduleController@getSchedule');
+
+//车票
+Route::post('/ticket/generate', 'TicketController@generateTicket');
+
+//订单
+Route::post('/order/generate', 'OrderController@generateOrder');
+
+//乘客
+Route::post('/passenger/add', 'PassengerController@addPassenger');
+Route::post('/passenger/update', 'PassengerController@changePassengerInfo');
+Route::post('/passenger', 'PassengerController@getPassengerOfUser');
+Route::post('/passenger/delete', 'PassengerController@deletePassenger');
