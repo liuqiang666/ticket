@@ -16,7 +16,7 @@ class OrderTimeout extends Command
      *
      * @var string
      */
-    protected $signature = 'order:timeout';
+    protected $signature = 'OrderTimeout';
 
     /**
      * The console command description.
