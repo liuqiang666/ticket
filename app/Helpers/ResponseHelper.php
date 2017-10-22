@@ -28,8 +28,8 @@ class ResponseHelper {
             'data' => $result,
             'msg' => $msg == '' ? config("errorCode.$errorCode", '') : $msg,
             'extraInfo' => $extraInfo,
-        ]);
-        return $response->header("charset", 'utf-8');
+        ], JSON_UNESCAPED_UNICODE);
+        return $response;
     }
 
 
