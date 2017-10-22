@@ -16,16 +16,15 @@ use App\Models\Train;
 class ScheduleController extends Controller
 {
     public function getSeatCount(Request $request){
-        $from_station = $request['from_station'];
-        $to_station = $request['to_station'];
-        $date = $request['date'];
+        $from_station = $request->input('from_station');
+        $to_station = $request->input('to_station');
+        $date = $request->input('date');
         $from_stations = Schedule::model()->getStationName($from_station);
         $to_stations = Schedule::model()->getStationName($to_station);
         $trains = Schedule::model()->getStationNo($from_stations);
         $train_list = [];
         foreach ($trains as $train){
             $result = Schedule::model()->getStationNo($to_stations, ['train_id' => $train->train_id]);
-            print_r($result);
             if (!empty($result[0]))
                 if ($result[0]->station_no > $train->station_no){
                     $train_list[$train->train_id]['from_station'] = $train->station_name;
@@ -69,9 +68,9 @@ class ScheduleController extends Controller
     }
 
     public function getSchedule(Request $request){
-        $train_id = $request['train_id'];
-        $from_station_no = $request['from_station_no'];
-        $to_station_no = $request['to_station_no'];
+        $train_id = $request->input('train_id');
+        $from_station_no = $request->input('from_station_no');
+        $to_station_no = $request->input('to_station_no');
         $schedule = Schedule::model()->getSchedule($train_id);
         foreach ($schedule as $s){
             if ($s->station_no <= $to_station_no and $s->station_no >= $from_station_no)

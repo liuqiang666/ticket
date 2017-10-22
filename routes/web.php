@@ -28,9 +28,12 @@ Route::post('/schedule', 'ScheduleController@getSchedule');
 
 //车票
 Route::post('/ticket/generate', 'TicketController@generateTicket');
+Route::post('/ticket/refund', 'TicketController@refundTicket');
 
 //订单
 Route::post('/order/generate', 'OrderController@generateOrder');
+Route::post('/order', 'OrderController@getOrderInfo');
+Route::post('/order/status', 'OrderController@changeOrderStatus');
 
 //乘客
 Route::post('/passenger/add', 'PassengerController@addPassenger');

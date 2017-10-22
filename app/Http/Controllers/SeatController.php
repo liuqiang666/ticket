@@ -69,11 +69,11 @@ class SeatController extends Controller
     }
 
     //确定座位占用后更改该座位占用信息
-    public function updateSeatInfo($seat_id, $seat_is_free, $from_station_no, $to_station_no){
+    public function updateSeatInfo($seat_id, $seat_is_free, $from_station_no, $to_station_no, $operate=1){
         $station_num = $to_station_no - $from_station_no;
         $str = "";
         for($i=0; $i < $station_num; $i ++)
-            $str .= "1";
+            $str .= "$operate";
         $updated_is_free = substr_replace($seat_is_free, $str, $from_station_no-1, $station_num);
         $result = Seat::model()->updateSeatInfo($seat_id, ['is_free' => $updated_is_free]);
         return $result;

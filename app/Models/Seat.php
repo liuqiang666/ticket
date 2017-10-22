@@ -25,6 +25,22 @@ class Seat extends Model
         return self::$instance;
     }
 
+    public function insertRow($data) {
+//        $data['created_at'] = $data['updated_at'] = date('Y-m-d H:i:s');
+        $result = DB::table($this->table)
+            ->insertGetId($data);
+        return $result;
+    }
+
+    public function findRow($where, $select = '*')
+    {
+        $result = DB::table($this->table)
+            ->select(DB::raw($select))
+            ->where($where)
+            ->first();
+        return $result;
+    }
+
     //获取座位信息
     public function getSeatInfo($train_id, $seat_type){
         $result = DB::table($this->table)

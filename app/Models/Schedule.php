@@ -67,7 +67,7 @@ class Schedule extends Model
     }
 
     //座位确定后更新余票信息
-    public function updateTicketCount($train_id, $seat_type, $from_station_no, $to_station_no){
+    public function updateTicketCount($train_id, $seat_type, $from_station_no, $to_station_no, $operate=0){
         $s = [
             '1' => 'wz_count',
             '2' => 'yz_count',
@@ -81,7 +81,11 @@ class Schedule extends Model
             ->where('id', $train_id)
             ->where('station_no', '>=', $from_station_no)
             ->where('station_no', '<=', $to_station_no)
-            ->decrement($s[$seat_type], 1);
+            ->when($operate == 1, function ($query) use ($s, $seat_type){
+                return $query->increment($s[$seat_type], 1);
+            }, function ($query) use ($s, $seat_type){
+                return $query->decrement($s[$seat_type], 1);
+            });
         return $result;
     }
 
