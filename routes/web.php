@@ -23,6 +23,8 @@ Route::post('/register', 'RegisterController@userRegister');
 //余票查询
 Route::post('/ticket', 'ScheduleController@getSeatCount');
 
+//车站名联想
+Route::post('/station/association', 'ScheduleController@getAssociateStationName');
 //时刻表
 Route::post('/schedule', 'ScheduleController@getSchedule');
 

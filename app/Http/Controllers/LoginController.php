@@ -43,7 +43,8 @@ class LoginController extends Controller
         if($input_password == $correct_password){
 //            if ($remember == 1)
 //                $request->session()->put('account', $account);
-            return ResponseHelper::getInstance()->jsonResponse(0, ['user' => $account]);
+            $user = User::model()->findRow(['phone_number'=>$account], 'id, phone_number, user_name, authority');
+            return ResponseHelper::getInstance()->jsonResponse(0, ['user' => $user]);
         }else{
             return ResponseHelper::getInstance()->jsonResponse(1014, null, '密码错误');
         }

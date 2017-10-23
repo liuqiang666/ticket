@@ -93,4 +93,11 @@ class ScheduleController extends Controller
         }
         return $total_price;
     }
+
+    public function getAssociateStationName(Request $request){
+        $keyword = $request->input('keyword');
+        $word = trim($keyword);
+        $stations = Schedule::model()->getAssociateStationName($word);
+        return ResponseHelper::getInstance()->jsonResponse(0,['stations' => $stations]);
+    }
 }

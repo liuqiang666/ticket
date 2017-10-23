@@ -99,4 +99,13 @@ class Schedule extends Model
             ->get();
         return $result;
     }
+
+    //模糊匹配站名
+    public function getAssociateStationName($keyword){
+        $result = DB::table($this->table)
+            ->select('station_name')
+            ->where('station_name', 'like', "%$keyword%")
+            ->get();
+        return $result;
+    }
 }
