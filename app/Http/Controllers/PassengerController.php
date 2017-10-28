@@ -25,7 +25,7 @@ class PassengerController extends Controller
 
     public function getPassengerOfUser(Request $request){
         $user_id = $request['user_id'];
-        $passengers = Passenger::model()->findPassenger(['user_id' => $user_id], 'passenger_name, 
+        $passengers = Passenger::model()->findPassenger(['user_id' => $user_id], 'id as passenger_id, passenger_name, 
                         credentials_number, credentials_type, phone_number, passenger_type');
         return ResponseHelper::getInstance()->jsonResponse(0, $passengers, 'passenger');
     }

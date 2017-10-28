@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function generateOrder(Request $request){
         $data = $request->except('passengers');
         $passengers = $request->input('passengers');
+        print_r("passengers:" . $passengers);
         $data['order_time'] = date('Y-m-d H:i:s');
         $result = Order::model()->insertRow($data);
         if($result){
@@ -32,9 +33,9 @@ class OrderController extends Controller
                 if(!$r)
                     return ResponseHelper::getInstance()->jsonResponse(1100, $result, "order_passenger add error");
             }
-            return ResponseHelper::getInstance()->jsonResponse(0, $result, "order");
+            return ResponseHelper::getInstance()->jsonResponse(0, ['result' => $result, 'passengers' => $passengers], "order");
         }
-        return ResponseHelper::getInstance()->jsonResponse(1100, $result, "generate order error");
+        return ResponseHelper::getInstance()->jsonResponse(1100, ['result' => $result, 'passengers' => $passengers], "generate order error");
     }
 
 
