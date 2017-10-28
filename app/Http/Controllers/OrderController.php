@@ -34,12 +34,12 @@ class OrderController extends Controller
                     'price' => $passenger['price']
                 ];
                 $r = Order::model()->addRelationPassengerOrder($d);
-                $order = Order::model()->findRow(['id' => $result]);
+//                $order = Order::model()->findRow(['id' => $result]);
                 if($r){
                     $seatController = new SeatController();
-                    $seat = $seatController->FindQualifiedSeat($order->train_id, $order->seat_type, $order->from_station_no, $order->to_station_no);
+                    $seat = $seatController->FindQualifiedSeat($data['train_id'], $data['seat_type'], $data['from_station_no'], $data['to_station_no']);
                     if(empty($seat))
-                        return ResponseHelper::getInstance()->jsonResponse(1103, [$order]);
+                        return ResponseHelper::getInstance()->jsonResponse(1103, [$seat]);
                     $t_data['passenger_id'] = $passenger['id'];
                     $t_data['train_code'] = $data['train_code'];
                     $t_data['from_station'] = $data['from_station_name'];
@@ -51,11 +51,11 @@ class OrderController extends Controller
                     $t_data['order_id'] = $result;
                     $t_result = Ticket::model()->insertRow($t_data);//用事务合适
                     if($t_result){
-                        $res = $seatController->updateSeatInfo($seat->id, $seat->is_free, $order->from_station_no, $order->to_station_no);
+                        $res = $seatController->updateSeatInfo($seat->id, $seat->is_free, $data['from_station_no'], $data['to_station_no']);
                         if($res)
-                            Schedule::model()->updateTicketCount($order->train_id, $order->seat_type, $order->from_station_no, $order->to_station_no);
+                            Schedule::model()->updateTicketCount($data['train_id'], $data['seat_type'], $data['from_station_no'], $data['to_station_no']);
                     }
-                    $tickets[] = $result;
+                    $tickets[] = $t_result;
                 } else
                     return ResponseHelper::getInstance()->jsonResponse(1100, $result, "order_passenger add error");
             }
