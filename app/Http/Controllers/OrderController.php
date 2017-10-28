@@ -18,7 +18,8 @@ class OrderController extends Controller
     public function generateOrder(Request $request){
         $data = $request->except('passengers');
         $passengers = $request->input('passengers');
-        print_r("passengers:" . $passengers);
+//        print_r("passengers:" . $passengers);
+        $passengers = json_decode($passengers, true);
         $data['order_time'] = date('Y-m-d H:i:s');
         $result = Order::model()->insertRow($data);
         if($result){
