@@ -18,8 +18,8 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function generateTicket(Request $request){
-        $order_id = $request->input('order_id');
+    public function generateTicket($order_id){
+//        $order_id = $request->input('order_id');
         $order = Order::model()->findRow(['id' => $order_id]);
         if(!$order)
             return ResponseHelper::getInstance()->jsonResponse(1104, [$order_id]);
@@ -47,7 +47,8 @@ class TicketController extends Controller
             }
             $tickets[] = $result;
         }
-        return ResponseHelper::getInstance()->jsonResponse(0, $tickets, "generate ticket success");
+//        return ResponseHelper::getInstance()->jsonResponse(0, $tickets, "generate ticket success");
+        return $tickets;
     }
 
     //退票
