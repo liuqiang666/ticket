@@ -61,10 +61,16 @@ class OrderController extends Controller
 
     public function changeOrderStatus(Request $request){
         $order_id = $request->input('order_id');
-        $order_status = $request->input('order_status');
-        $res = Order::model()->updateOrderInfo(['order_status' => $order_status], ['id' => $order_id]);
-        if($res)
+//        $order_status = $request->input('order_status');
+        //1代表已支付
+        $res = Order::model()->updateOrderInfo(['order_status' => 1], ['id' => $order_id]);
+        if($res){
+            $tickets = Ticket::model()->getRows(['order_id' => $order_id], 'id as ticket_id');
+            foreach ($tickets as $ticket)
+                Ticket::model()->updateTicketInfo(['ticket_status' => 1], ['id' => $ticket->ticket_id]);
             return ResponseHelper::getInstance()->jsonResponse(0, [$res], "update order status success");
+        }
+
         return ResponseHelper::getInstance()->jsonResponse(1100, [$order_id], "update order status error");
     }
 

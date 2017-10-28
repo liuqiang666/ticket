@@ -46,8 +46,8 @@ class OrderTimeout extends Command
         //订单状态0未支付
         $orders = Order::model()->getRows([['order_status', 0], ['order_time', '<=', $tmp_time]], 'id, train_id, seat_type, from_station_no, to_station_no');
         foreach ($orders as $order){
-            //订单状态5已失效
-            $r = Order::model()->updateOrderInfo(['order_status' => 5], ['id' => $order->id]);
+            //订单状态3已失效
+            $r = Order::model()->updateOrderInfo(['order_status' => 3], ['id' => $order->id]);
             if($r){
                 $tickets = Ticket::model()->getRows(['order_id' => $order->id], 'id, seat_id');//订单下的车票
                 foreach ($tickets as $ticket){
