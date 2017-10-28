@@ -59,7 +59,7 @@ class TicketController extends Controller
         $order = Order::model()->findRow(['id' => $ticket->order_id], 'train_id, seat_type, from_station_no, to_station_no');
         $seat = Seat::model()->findRow(['id' => $ticket->seat_id], 'is_free');//获得座位信息
         $seatController = new SeatController();
-        if($ticket->ticket_status == 0){
+        if($ticket->ticket_status == 1){
             //修改车票状态为已退票2
             $t_res = Ticket::model()->updateTicketInfo(['ticket_status' => 2], ['id' => $ticket_id]);
             //将座位信息恢复
