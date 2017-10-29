@@ -105,6 +105,7 @@ class Schedule extends Model
         $result = DB::table($this->table)
             ->select('station_name')
             ->where('station_name', 'like', "%$keyword%")
+            ->groupBy('station_name')
             ->get();
         return $result;
     }
